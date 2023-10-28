@@ -1,7 +1,7 @@
-# import json
+import json
 
-# with open("city.list.json", "r",encoding="utf-8") as file:
-#   data = json.load(file)
+with open("city.list.json", "r",encoding="utf-8") as file:
+  data = json.load(file)
 
 
 # ########################################
@@ -11,33 +11,59 @@
 # ########################################
 # #2. Создать словарь, где ключ — это код страны, а значение — количество городов.
 
-# # def get_dict_country_with_count_cities(date: list) -> dict:
-# #     list_of_country = []
-# #     uniccountry = []
-# #     dict_country = {}
-# #     count = 0
+# def get_dict_country_with_count_cities(date: list) -> dict:
+#     list_of_country = []
+#     uniccountry = []
+#     dict_country = {}
+#     count = 0
     
-# #     for x in date:
-# #         list_of_country.append(x["country"])
-# #     uniccountry = set(list_of_country)
-# #     uniccountry = list(sorted(uniccountry))
+#     for x in date:
+#         list_of_country.append(x["country"])
+#     uniccountry = set(list_of_country)
+#     uniccountry = list(sorted(uniccountry))
 
-# #     date = list(sorted(date,key = lambda x: x["country"]))
+#     date = list(sorted(date,key = lambda x: x["country"]))
 
-# #     for i in uniccountry:
-# #         count = 0
-# #         for x in date:
-# #             if i == x["country"]:
-# #                 count += 1
-# #                 dict_country[i] = count
-
-
-# #     return dict_country
+#     for i in uniccountry:
+#         count = 0
+#         for x in date:
+#             if i == x["country"]:
+#                 count += 1
+#                 dict_country[i] = count
 
 
-# # c = get_dict_country_with_count_cities(data)
+#     return dict_country
 
-# # print(c)
+
+# c = get_dict_country_with_count_cities(data)
+
+
+# def get_dict_country_with_count_cities_v2(date: list) -> dict:
+#     list_of_country = []
+#     uniccountry = []
+#     dict_country = {}
+#     count = 0
+    
+#     # for x in date:
+#     #     list_of_country.append(x["country"])
+#     # uniccountry = set(list_of_country)
+#     # uniccountry = list(sorted(uniccountry))
+
+#     for x in date:
+#         if x["country"] in dict_country:
+#           dict_country[x["country"]] += 1
+#         else: 
+#           dict_country[x["country"]] = 1
+           
+#         # if x["country"] in uniccountry:
+#         #    dict_country[x["country"]] = 0
+
+#     return dict_country
+
+# c = get_dict_country_with_count_cities_v2(data)
+
+
+# print(c)
 
 # #######################################################################
 # # 3. Подсчитать количество городов в северном полушарии и в южном.
