@@ -41,24 +41,13 @@ print(c)
 
 
 def get_dict_country_with_count_cities_v2(date: list) -> dict:
-    list_of_country = []
-    uniccountry = []
     dict_country = {}
-    count = 0
     
-    # for x in date:
-    #     list_of_country.append(x["country"])
-    # uniccountry = set(list_of_country)
-    # uniccountry = list(sorted(uniccountry))
-
     for x in date:
         if x["country"] in dict_country:
           dict_country[x["country"]] += 1
         else: 
           dict_country[x["country"]] = 1
-           
-        # if x["country"] in uniccountry:
-        #    dict_country[x["country"]] = 0
 
     return dict_country
 
