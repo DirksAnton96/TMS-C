@@ -1,7 +1,7 @@
-import json
+# import json
 
-with open("city.list.json", "r",encoding="utf-8") as file:
-  data = json.load(file)
+# with open("city.list.json", "r",encoding="utf-8") as file:
+#   data = json.load(file)
 
 
 # ########################################
