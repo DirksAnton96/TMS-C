@@ -1,3 +1,5 @@
+import time
+
 class Auto:
 
     brande = ""
@@ -39,12 +41,73 @@ class Auto:
         return self.weight
 
 
-auto_v1 = Auto("Mersedes",0,"G-14")
-auto_v1.move()
-auto_v1.stop()
-auto_v1.auto_print()
-auto_v1.color_set("black")
-auto_v1.weight_set(2.5)
-auto_v1.birthday()
-auto_v1.birthday()
-auto_v1.auto_print()
+
+class Truck(Auto):
+
+    max_load = 0
+
+    def __init__(self,max_load,brande, age, mark):
+        super().__init__(brande, age, mark)
+        self.max_load = max_load
+    
+    def move(self) -> str:
+        print("Attention")
+        super().move()
+
+    def load(self) -> str:
+        stroka = "Load"
+        time.sleep(1)
+        print(stroka)
+        time.sleep(1)
+        return stroka
+    
+    def truck_print(self):
+        super().auto_print()
+        print(self.max_load)
+    
+class Car(Auto):
+
+    max_speed = 0
+
+    def __init__(self,max_speed,brande, age, mark):
+        super().__init__(brande, age, mark)
+        self.max_speed = max_speed
+    
+    def move(self) -> str:
+        super().move()
+        stroka = "Max speed is " + self.max_speed
+        print(stroka)
+        return stroka
+    
+    def car_print(self):
+        super().auto_print()
+        print(self.max_speed)
+    
+
+
+
+
+
+truck_v1 = Truck(100,"Mersedes",0,"G-14")
+
+truck_v2 = Truck(130,"Porshe",2,"A-15")
+
+car_v1 = Car(120,"Scania",0,"P-10")
+
+car_v2 = Car(150,"Reno",5,"Z-15")
+
+
+truck_v1.truck_print()
+truck_v2.truck_print()
+
+car_v1.car_print()
+car_v2.car_print()
+# auto_v1 = Auto("Mersedes",0,"G-14")
+# auto_v1.move()
+# auto_v1.stop()
+# auto_v1.auto_print()
+# auto_v1.color_set("black")
+# auto_v1.weight_set(2.5)
+# auto_v1.birthday()
+# auto_v1.birthday()
+# auto_v1.auto_print()
