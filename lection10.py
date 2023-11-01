@@ -40,9 +40,7 @@ class Auto:
 
 class Truck(Auto):
 
-    max_load = 0
-
-    def __init__(self,max_load,brande, age, mark, color: str = "White",weight: float = 1.5):
+    def __init__(self,max_load, brande, age, mark, color: str = "White",weight: float = 1.5):
         super().__init__(brande, age, mark, color, weight)
         self.max_load = max_load
     
@@ -62,8 +60,6 @@ class Truck(Auto):
         print(self.max_load)
     
 class Car(Auto):
-
-    max_speed = 0
 
     def __init__(self,max_speed,brande, age, mark, color: str = "White",weight: float = 1.5):
         super().__init__(brande, age, mark, color, weight)
