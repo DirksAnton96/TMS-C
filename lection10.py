@@ -1,17 +1,13 @@
 import time
 
-class Auto:
+class Auto:  
 
-    brande = ""
-    age = 0
-    color = ""
-    mark = ""
-    weight = 0.0
-
-    def __init__(self, brande, age, mark):
+    def __init__(self, brande, age, mark,color: str = "White",weight: float = 1.5):
         self.brande = brande
         self.age = age
         self.mark = mark
+        self.color = color
+        self.weight = weight
 
     
 
@@ -46,8 +42,8 @@ class Truck(Auto):
 
     max_load = 0
 
-    def __init__(self,max_load,brande, age, mark):
-        super().__init__(brande, age, mark)
+    def __init__(self,max_load,brande, age, mark, color: str = "White",weight: float = 1.5):
+        super().__init__(brande, age, mark, color, weight)
         self.max_load = max_load
     
     def move(self) -> str:
@@ -69,8 +65,8 @@ class Car(Auto):
 
     max_speed = 0
 
-    def __init__(self,max_speed,brande, age, mark):
-        super().__init__(brande, age, mark)
+    def __init__(self,max_speed,brande, age, mark, color: str = "White",weight: float = 1.5):
+        super().__init__(brande, age, mark, color, weight)
         self.max_speed = max_speed
     
     def move(self) -> str:
@@ -88,7 +84,7 @@ class Car(Auto):
 
 
 
-truck_v1 = Truck(100,"Mersedes",0,"G-14")
+truck_v1 = Truck(100,"Mersedes",0,"G-15")
 
 truck_v2 = Truck(130,"Porshe",2,"A-15")
 
@@ -102,12 +98,12 @@ truck_v2.truck_print()
 
 car_v1.car_print()
 car_v2.car_print()
-# auto_v1 = Auto("Mersedes",0,"G-14")
-# auto_v1.move()
-# auto_v1.stop()
-# auto_v1.auto_print()
-# auto_v1.color_set("black")
-# auto_v1.weight_set(2.5)
-# auto_v1.birthday()
-# auto_v1.birthday()
-# auto_v1.auto_print()
+auto_v1 = Auto("Mersedes",0,"G-14")
+auto_v1.move()
+auto_v1.stop()
+auto_v1.auto_print()
+auto_v1.color_set("black")
+auto_v1.weight_set(2.5)
+auto_v1.birthday()
+auto_v1.birthday()
+auto_v1.auto_print()
