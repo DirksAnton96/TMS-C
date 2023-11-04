@@ -174,3 +174,93 @@ stroks.is_string_eq()
 print(stroks.stroka_1)
 print(stroks.stroka_2)
 
+
+class  Rectangle:
+    def __init__(self, width: int | float = 0, hieght: int | float = 0):
+        self.__width = width
+        self.__hieght = hieght
+    
+    def get_str(self):
+        return f"Прямоугольник с шириной {self.__width} и высотой {self.__hieght} !"
+    
+    def get_area(self) -> int | float:
+        return self.__width * self.__hieght
+    
+    def get_perimetr(self) -> int | float:
+        return (self.__width * 2) + (self.__hieght * 2)
+    
+    @property
+    def is_square(self) -> bool:
+        if self.__width == self.__hieght:
+            return True
+        else :
+            return False
+
+value = Rectangle(3,4)
+print(value.get_str())
+print(f"Area: {value.get_area()}")
+print(f"Perimetr: {value.get_perimetr()}")
+if value.is_square:
+    print("Square")
+else:
+    print("Rectangle")
+print(value.is_square)    
+
+class Person:
+    def __init__(self, name: str = "", age: int = 0, gender: str = "M"):
+        self.__name = name
+        self.__age = age
+        self.__gender = gender
+    
+    def get_str(self):
+        return f"Имя: {self.__name}, Возраст: {self.__age}, Пол: {self.__gender}"
+    
+    @property
+    def name(self):
+        return self.__name
+    
+    @name.setter
+    def name(self, new_name: str):
+        self.__name = new_name
+    
+    @staticmethod
+    def __is_audit(self):
+        if self.__age >=18 :
+            return True
+        else :
+            return False
+    
+    def print_is_audit(self):
+        if self.__is_audit(self):
+            print("True")
+        else:
+            print("False")
+
+    
+    @classmethod
+    def create_from_string(cls, s: str) -> str:
+        """
+        Классовый метод принимает первым параметром Класс, из которого он был вызван!
+
+        Создает новый экземпляр класса `cls` на основе переданного диаметра.
+        :param s: Строка вида name-age-gender
+        :return: экземпляр класса `cls`
+        """
+        first = s.find("-")
+        name = s[:first]
+        second = s.rindex("-")
+        age = s[first+1:second]
+        gender = s[second+1:]
+        return cls(name,age,gender)
+
+value = Person("Anton",27,"M")
+
+print(value.get_str())
+print(value.name)
+print(value.print_is_audit())
+value.name = "Ivan"
+print(value.get_str())
+
+new_value = value.create_from_string("Peter-40-M")
+
+print(new_value.get_str())
