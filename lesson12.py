@@ -108,21 +108,18 @@ class ShopFurniture(AbstractShop):
         self._value_in_shop = []
     
     def add_product(self, furniture: Furniture):
-        if not isinstance(furniture,Furniture):
-            raise NonProductError(f"переданый экземпляп не является экземпляром класса Furniture - NonProductError")
-        else: 
+        if self.__is_valid(furniture):
             self._value_in_shop.append(furniture)
 
     def sell_product(self, furniture: Furniture):
-        if not isinstance(furniture,Furniture):
-            raise NonProductError(f"переданый экземпляп не является экземпляром класса Furniture - NonProductError")
-        else:
+        if self.__is_valid(furniture):
             self._value_in_shop.remove(furniture)
+            
 
     def all_products(self) -> Furniture:
         return self._value_in_shop
     
-    def is_valid(self, furniture: Furniture) -> bool:
+    def __is_valid(self, furniture: Furniture) -> bool:
         if not isinstance(furniture,Furniture):
             raise NonProductError(f"переданый экземпляп не является экземпляром класса Furniture - NonProductError")
         else:
