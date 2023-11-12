@@ -39,22 +39,31 @@ class AbstractShop(ABC):
 
 class RealShop(AbstractShop):
 
-    def __init__(self, obg: Product):
-        self.obg.id = id
-        self.obg.name = name
-        self.obg.price = price
-        self.obg.diametr = diametr
-        self.obg.content = ConnectionResetError
-        self.obg.volume = volume
+    def __init__(self):
+        self._value_in_shop = []
 
     def add_product(self, obg: Product):
-        pass
+        self._value_in_shop.append(obg)
 
     def sell_product(self, obg: Product):
-        pass
+        self._value_in_shop.remove(obg)
 
     def all_products(self) -> Product:
-        pass
+        return self._value_in_shop
+
+pizza_1 = Pizza(1,"Margarita",20.6,17,["майнез","кетчуп","сыр"])
+coffee_1 = Coffee(1,"якобс",14.5,0.3,"крепкий")
+
+pr = RealShop()
+
+pr.add_product(pizza_1)
+pr.add_product(coffee_1)
+
+print(pr.all_products())
+
+pr.sell_product(pizza_1)
+print(pr.all_products())
+    
 
 
     
