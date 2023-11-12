@@ -60,10 +60,14 @@ class Validator:
         self._product = product
     
     def is_valid(self):
-        try:
-            return isinstance(self._product, Product)
-        except ValueError:
+        if not isinstance(self._product,Product):
             raise NonProductError(f"переданый экземпляп не является экземпляром класса Product - NonProductError")
+        else:
+            return True
+        # try:
+        #     return isinstance(self._product, Product)
+        # except ValueError:
+        #     raise NonProductError(f"переданый экземпляп не является экземпляром класса Product - NonProductError")
         
 pizza_1 = Pizza(1,"Margarita",20.6,17,["майнез","кетчуп","сыр"])
 coffee_1 = Coffee(1,"якобс",14.5,0.3,"крепкий")
