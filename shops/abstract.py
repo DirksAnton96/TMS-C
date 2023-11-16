@@ -1,21 +1,5 @@
-from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
-
-@dataclass
-class Product:
-    id: int
-    name: str
-    price: float
-
-@dataclass
-class Pizza(Product):
-    diametr: int
-    content: list
-
-@dataclass
-class Coffee(Product):
-    volume: float
-    type_coffee: str
+from .product import Product
 
 class AbstractShop(ABC):
 

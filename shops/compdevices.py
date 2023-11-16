@@ -1,11 +1,7 @@
-from dataclasses import dataclass, field
-from .abstract import Product
+from .product import Product, Computer
 from .realshop import RealShop
 
-@dataclass
-class Computer(Product):
-    country: str
-    isfullcomplectetion: bool = False
+
 
 class ComputerShops(RealShop):
     

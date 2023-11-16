@@ -14,6 +14,7 @@ cpr = ComputerShops()
 
 cpr.add_product(comp)
 cpr.add_product(comp_2)
+
 cpr.add_product(dvd_1)
 
 print(cpr.all_products())
@@ -25,3 +26,6 @@ pr.add_product(book)
 pr.add_product(journal)
 
 print(pr.all_products())
+
+
+

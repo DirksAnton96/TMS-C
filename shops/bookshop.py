@@ -1,12 +1,6 @@
-from dataclasses import dataclass, field
-from .abstract import Product
+from .product import Product, Book
 from .realshop import RealShop
-
-@dataclass
-class Book(Product):
-    isdanie: int
-    isjournal: bool = False
-    
+ 
     
 
 class BookShops(RealShop):
