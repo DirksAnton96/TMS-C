@@ -8,21 +8,24 @@ CREATE TABLE Users(
     id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(40) NOT NULL,
     password VARCHAR(40) not NULL,
-    email VARCHAR(30)
+    email VARCHAR(30),
+    constraint email_check check (email regexp '^[0-9a-zA-Z-\._]+@[0-9a-zA-Z-\._]+'),
+    constraint passwd_check check (length(password) >= 10)
 )
 
 CREATE TABLE Seller(
     id INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    company VARCHAR(50),
-    phone VARCHAR(30) NOT NULL
+    company VARCHAR(50) NOT NULL,
+    phone VARCHAR(30) NOT NULL,
+    constraint phone_check check (phone regexp '^[0-9]+$')
 ) 
 
 CREATE TABLE Products(
     id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     seller_id INTEGER UNSIGNED NOT NULL,
     name VARCHAR(50),
-    cost INTEGER,
-    count INTEGER,
+    cost INTEGER NOT NULL,
+    count INTEGER NOT NULL,
     Foreign Key (seller_id) REFERENCES Seller (id)
 )
 
@@ -32,5 +35,5 @@ CREATE TABLE Orders(
     product_id INTEGER UNSIGNED NOT NULL,
     Foreign Key (user_id) REFERENCES Users (id),
     Foreign Key (product_id) REFERENCES Products (id),
-    count INTEGER
+    count INTEGER NOT NULL
 )
