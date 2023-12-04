@@ -9,11 +9,10 @@ def get_note(uuid: str)->Note:
         query = select(Note).where(Note.uuid==uuid)
         return conn.execute(query).scalar_one()
 
-def create_note(title: str, content: str, time_creation: datetime = datetime.now)->Note:
+def create_note(title: str, content: str)->Note:
     with session() as conn:
-        note = Note(title=title,content=content,create_at=time_creation)
+        note = Note(title=title,content=content)
         conn.add(note)
         conn.commit()
         conn.refresh(note)
     return note
-

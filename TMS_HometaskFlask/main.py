@@ -19,7 +19,6 @@ def get_createrpost_view():
         '<form action="/create_notes" method="post">'
         '<p>title: <input type="text" name="title"></p>'
         '<p>content: <input type="text" name="content"></p>'
-        '<p>time creation: <input type="datetime-local" name="create_at"></p>'
         '<p> <input type="submit"> </p>'
         '</form>'
         )
@@ -31,8 +30,7 @@ def createrpost_view():
     try:
         note = create_note(
             title = notes_data["title"],
-            content = notes_data["content"],
-            time_creation = notes_data["create_at"]
+            content = notes_data["content"]
         )
     except exc.IntegrityError:
         return f""" У нас такой заголовок уже есть: {notes_data["title"]}"""
