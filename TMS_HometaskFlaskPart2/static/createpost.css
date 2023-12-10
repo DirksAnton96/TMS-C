@@ -1,0 +1,33 @@
+.input-form {
+    border-radius: 5px;
+    border: #bdbdbd solid 1px;
+    height: 20px;
+    padding-left: 8px;
+}
+
+.input-block {
+    padding-left: 20px;
+    padding-bottom: 10px;
+    border: #a1f4f3;
+    border-color: rgb(239, 183, 109);
+    border-style: solid;
+}
+
+.textsy {
+    color: rgb(185, 185, 9);
+    font-weight: bold;
+    font-style: italic;
+}
+
+.form-button {
+    background-color: #0264f7;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 7px 25px;
+    cursor: pointer;
+}
+
+.form-button:hover {
+    box-shadow: 0 0 5px 3px rgba(138, 138, 138, 0.4);
+}
