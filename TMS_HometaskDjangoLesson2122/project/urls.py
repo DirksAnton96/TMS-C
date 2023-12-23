@@ -26,5 +26,6 @@ urlpatterns = [
     path("create", create_note_view, name="create-note"),
     path("post/<note_uuid>", show_note_view, name="show-note"),
     path("show-about", show_about_view, name="show-about"),
-    path("post/<note_uuid>/edit", update_note_view, name="update-note"),
+    path("edit/<note_uuid>", update_note_view, name="update-note"),
+    path("delete/<note_uuid>", delete_node, name="delete-node"),
 ]

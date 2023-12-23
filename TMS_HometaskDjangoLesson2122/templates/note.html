@@ -13,9 +13,9 @@
 
         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
 
-            <a href="#{% url 'update-note' %}" class="btn btn-warning">Редактировать</a>
+            <a href="{% url 'update-note' note.uuid %}" class="btn btn-warning">Редактировать</a>
 
-            <form action="{# URL для удаления #}" method="post">
+            <form action="{% url 'delete-node' note.uuid %}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-danger">Удалить</button>
             </form>
