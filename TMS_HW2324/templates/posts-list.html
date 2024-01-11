@@ -17,6 +17,10 @@
                 Дата изменения:
                 {{ note.mode_time }}
                 {% endif %}
+
+                <a href="{% url 'user_notes' note.username %}">
+                  {{ note.username }}
+              </a>
             </p>
           </div>
         </div>

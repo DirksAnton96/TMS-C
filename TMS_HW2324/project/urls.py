@@ -19,7 +19,7 @@ from django.urls import path,include, re_path
 from django.conf import settings
 from django.conf.urls.static import serve
 
-from posts.views import home_page_view, create_note_view, show_note_view, show_about_view, update_note_view, delete_node,register
+from posts.views import home_page_view, create_note_view, show_note_view, show_about_view, update_note_view, delete_node,register,user_notes
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,4 +34,5 @@ urlpatterns = [
     path("edit/<note_uuid>", update_note_view, name="update-note"),
     path("delete/<note_uuid>", delete_node, name="delete-node"),
     re_path(r"^media/(?P<path>.*)$", serve, {"document_root": settings.MEDIA_ROOT}),
+    path("user/<username>/notes", user_notes, name="user_notes"),
 ]

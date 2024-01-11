@@ -75,6 +75,19 @@ def update_note_view(request: WSGIRequest, note_uuid):
 def show_about_view(request: WSGIRequest):
     return render(request, "show-about.html")
 
+def user_notes(request: WSGIRequest, username: str):
+    queryset = queryset_optimization(
+        Note.objects.filter(user__username=username)
+    )
+    # SELECT * FROM "posts_note"
+    # INNER JOIN "users" ON ("posts_note"."user_id" = "users"."id")
+    # WHERE "users"."username" = boris1992
+    # ORDER BY "posts_note"."created_at" DESC
+
+    print(Note.objects.filter(user__username=username).query)
+
+    return render(request, "posts-list.html", {"notes": queryset})
+
 
 def register(request: WSGIRequest):
     if request.method != "POST":
