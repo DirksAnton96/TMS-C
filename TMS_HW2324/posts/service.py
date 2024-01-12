@@ -1,4 +1,4 @@
-import os
+import os, pathlib
 from django.core.handlers.wsgi import WSGIRequest
 from django.db.models import QuerySet, Q, F
 from django.conf import settings
@@ -29,13 +29,12 @@ def create_note(request: WSGIRequest) -> Note:
     return note
 
 def delete_image(note: Note):
-    file_path = os.path.join(settings.MEDIA_ROOT, str(note.uuid))
-    os.remove(file_path)
-    # if os.path.exists(os.path.join(settings.MEDIA_ROOT / str(note.uuid))):
-    #     os.remove(os.path.join(settings.MEDIA_ROOT / str(note.uuid)))
-    # if file.exists():
-    #     for f in file.iterdir():
-    #         f.unlink(missing_ok=False)
+    
+    note_media_folder: pathlib.Path = (settings.MEDIA_ROOT / str(note.uuid))
+    
+    for file in note_media_folder.glob("*"):
+            file.unlink(missing_ok=True)
+    
 
 def update_note(request: WSGIRequest, note: Note) -> Note:
     
@@ -43,10 +42,10 @@ def update_note(request: WSGIRequest, note: Note) -> Note:
     
     note.title = request.POST.get("title")
     note.content = request.POST.get("content")
-    note.image = request.FILES.get("noteImage")
-    # if request.FILES.get("noteImage"):
-    #     delete_image(Note)
-    #     note.image = request.FILES.get("noteImage")
+    #note.image = request.FILES.get("noteImage")
+    if request.FILES.get("noteImage"):
+        delete_image(Note)
+        note.image = request.FILES.get("noteImage")
     note.save()
     
     return note

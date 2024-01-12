@@ -63,14 +63,27 @@ def update_note_view(request: WSGIRequest, note_uuid):
     try:
         note = Note.objects.get(uuid=note_uuid)
         
-        if request.method == "POST":
-            note = update_note(request, note)
-            # note.title = request.POST.get("title")
-            # note.content = request.POST.get("content")
-            # note.save()
-            return HttpResponseRedirect("/")
+        if note.user == request.user:
+            if request.method == "POST":
+                note = update_note(request, note)
+                # note.title = request.POST.get("title")
+                # note.content = request.POST.get("content")
+                # note.save()
+                return HttpResponseRedirect("/")
+            else:
+                return render(request, "edit_form.html", {"note": note})
         else:
-            return render(request, "edit_form.html", {"note": note})
+            return HttpResponseRedirect("/")
+             
+        
+        # if request.method == "POST":
+        #     note = update_note(request, note)
+        #     # note.title = request.POST.get("title")
+        #     # note.content = request.POST.get("content")
+        #     # note.save()
+        #     return HttpResponseRedirect("/")
+        # else:
+        #     return render(request, "edit_form.html", {"note": note})
     except Note.DoesNotExist:
         raise Http404
 
