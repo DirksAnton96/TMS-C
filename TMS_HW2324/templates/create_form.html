@@ -17,7 +17,7 @@
 <div class="container">
     <h1>Создание заметки</h1>
 
-    <form action="{% url 'create-note' %}" method="post">
+    <form action="{% url 'create-note' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
         <div class="mb-3">

@@ -1,3 +1,4 @@
+import pathlib
 import uuid
 
 from django.conf import settings
@@ -46,6 +47,10 @@ class Note(models.Model):
             models.Index(fields=("created_at",), name="created_at_index"),
         ]
 
+
+
+
+
 @receiver(post_delete, sender=Note)
 def after_delete_note(sender, instance: Note, **kwargs):
     if instance.image:
@@ -53,6 +58,7 @@ def after_delete_note(sender, instance: Note, **kwargs):
 
         for file in note_media_folder.glob("*"):
             file.unlink(missing_ok=True)
-        note_media_folder.unlink(missing_ok=True)
+#        note_media_folder.rmdir(missing_ok=True)
+        note_media_folder.rmdir()
     
 # Create your models here.

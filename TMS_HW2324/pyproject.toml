@@ -14,6 +14,7 @@ mysql = "^0.0.3"
 mysql-connector-python = "^8.2.0"
 django-ckeditor = "^6.7.0"
 pillow = "^10.2.0"
+django-cleanup = "^8.0.0"
 
 
 [build-system]

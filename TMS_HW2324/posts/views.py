@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect, Http404,HttpRequest
 from django.core.handlers.wsgi import WSGIRequest
 
 from .models import Note, User
-from .service import create_note, filter_notes, queryset_optimization
+from .service import create_note, filter_notes, queryset_optimization, update_note
 
 
 def home_page_view(request: WSGIRequest):
@@ -48,6 +48,7 @@ def show_note_view(request: WSGIRequest, note_uuid):
     return render(request, "note.html", {"note": note})
 # Create your views here.
 
+
 def delete_node(request: WSGIRequest, note_uuid):
     try: 
         note = Note.objects.get(uuid=note_uuid)
@@ -56,14 +57,17 @@ def delete_node(request: WSGIRequest, note_uuid):
     except Note.DoesNotExist:
         raise Http404
 
+
+@login_required
 def update_note_view(request: WSGIRequest, note_uuid):
     try:
         note = Note.objects.get(uuid=note_uuid)
         
         if request.method == "POST":
-            note.title = request.POST.get("title")
-            note.content = request.POST.get("content")
-            note.save()
+            note = update_note(request, note)
+            # note.title = request.POST.get("title")
+            # note.content = request.POST.get("content")
+            # note.save()
             return HttpResponseRedirect("/")
         else:
             return render(request, "edit_form.html", {"note": note})
