@@ -14,6 +14,7 @@ class RegisterForm(forms.Form):
         username = self.cleaned_data.get('username')
         if username and User.objects.filter(username=username).exists():
             raise forms.ValidationError('Пользователь с таким username уже существует')
+        return username
 
     def clean_email(self):
         email = self.cleaned_data.get('email')

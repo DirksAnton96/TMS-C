@@ -4,6 +4,8 @@ from django.db import models
 
 class Ingredient(models.Model):
     name = models.CharField(max_length=255)
+    count_KKal = models.CharField(max_length=10, default=1, null=True)
+    description = models.TextField(verbose_name="describtion of ingredient",null=True)
 
     def __str__(self):
         return self.name
@@ -39,5 +41,7 @@ class Recipe(models.Model):
             if value == self.category:
                 return label
         return "Unknown category"
+    
+
 
 # Create your models here.

@@ -7,8 +7,8 @@ from django.urls import reverse
 from django.contrib.postgres.aggregates import ArrayAgg
 
 
-from .forms import RecipeForm
-from .models import Recipe
+from .forms import RecipeForm, IngredientForm
+from .models import Recipe, Ingredient
 # Create your views here.
 
 def home(request: WSGIRequest):
@@ -30,6 +30,26 @@ def home(request: WSGIRequest):
 
     return render(request, 'home.html', {"recipes": recipes_queryset})
 
+
+@login_required
+def create_ingredient(request: WSGIRequest):
+    form = IngredientForm()
+
+    if request.method == 'POST':
+        form = IngredientForm(request.POST)  # Файлы находятся отдельно!
+        if form.is_valid():
+            if form.checkIshaveIngredient():
+                ingredient: Ingredient = form.save(commit=False)  # Не сохранять в базу рецепт, а вернуть его объект.
+                ingredient.user = request.user
+                ingredient.save()  # Сохраняем в базу объект.
+                form.save_m2m()  # Сохраняем отношения many to many для ингредиентов и рецепта.
+                return HttpResponseRedirect("/")
+            else :
+                return HttpResponseRedirect("/")
+
+            return HttpResponseRedirect("/")
+
+    return render(request, 'create-Ingredient.html', {'form': form})
 
 @login_required
 def create_recipe(request: WSGIRequest):
