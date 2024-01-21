@@ -20,7 +20,7 @@ class NoteListCreateAPIView(ListCreateAPIView):
     queryset = Note.objects.all()
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [SearchFilter, OrderingFilter]  # Реагирует на (query) параметр `search`
-    search_fields = ['@name', '@description']  # Используем полнотекстовый поиск Postgres
+    search_fields = ['@title', '@description']  # Используем полнотекстовый поиск Postgres
     ordering_fields = ["created_at", "mode_time", "user_username"]
     pagination_class = PageNumberPagination
     
@@ -40,60 +40,60 @@ class NoteDetailAPIView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsOwnerOrReadOnly]
 
 
-class NoteListCreateGenericAPIView(GenericAPIView):
-    queryset = Note.objects.all()
+# class NoteListCreateGenericAPIView(GenericAPIView):
+#     queryset = Note.objects.all()
     
-    def get_serializer_class(self):
-        if self.request.method == 'POST':
-            return NoteSerializer
-        return NoteListSerializer
+#     def get_serializer_class(self):
+#         if self.request.method == 'POST':
+#             return NoteSerializer
+#         return NoteListSerializer
     
     
-    def get(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        serializer: ModelSerializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+#     def get(self, request, *args, **kwargs):
+#         queryset = self.get_queryset()
+#         serializer: ModelSerializer = self.get_serializer(queryset, many=True)
+#         return Response(serializer.data)
     
-    def post(self, request, *args, **kwargs):
-        serializer: ModelSerializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        note = serializer.save(user=self.request.user) 
-        serializer = NoteDetailSerializer(instance=note)
-        return Response(serializer.data, status=201)
+#     def post(self, request, *args, **kwargs):
+#         serializer: ModelSerializer = self.get_serializer(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         note = serializer.save(user=self.request.user) 
+#         serializer = NoteDetailSerializer(instance=note)
+#         return Response(serializer.data, status=201)
 
 
-class DetailNoteGenericAPIView(GenericAPIView):
+# class DetailNoteGenericAPIView(GenericAPIView):
     
-    queryset = Note.objects.all()
+#     queryset = Note.objects.all()
     
-    def get_serializer_class(self):
-        if self.request.method == 'GET':
-            return NoteDetailSerializer
-        return NoteCreateSerializer
+#     def get_serializer_class(self):
+#         if self.request.method == 'GET':
+#             return NoteDetailSerializer
+#         return NoteCreateSerializer
     
-    def get(self, request, pk: uuid, *args, **kwargs):
-        note = get_object_or_404(self.get_queryset(), pk=pk)
-        serializer = self.get_serializer(instance=note)
-        return Response(serializer.data)
+#     def get(self, request, pk: uuid, *args, **kwargs):
+#         note = get_object_or_404(self.get_queryset(), pk=pk)
+#         serializer = self.get_serializer(instance=note)
+#         return Response(serializer.data)
     
-    def put(self, request, pk: uuid, *args, **kwargs):
-        note = get_object_or_404(self.get_queryset(), pk=pk)
-        serializer = self.get_serializer(data=request.data, instance=note)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+#     def put(self, request, pk: uuid, *args, **kwargs):
+#         note = get_object_or_404(self.get_queryset(), pk=pk)
+#         serializer = self.get_serializer(data=request.data, instance=note)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#         return Response(serializer.data)
     
-    def patch(self, request, pk: uuid, *args, **kwargs):
-        note = get_object_or_404(self.get_queryset(), pk=pk)
-        serializer = self.get_serializer(data=request.data, instance=note, partial=True)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+#     def patch(self, request, pk: uuid, *args, **kwargs):
+#         note = get_object_or_404(self.get_queryset(), pk=pk)
+#         serializer = self.get_serializer(data=request.data, instance=note, partial=True)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#         return Response(serializer.data)
     
-    def delete(self, request, pk: uuid, *args, **kwargs):
-        note = get_object_or_404(self.get_queryset(), pk=pk)
-        note.delete()
-        return Response(status=204)
+#     def delete(self, request, pk: uuid, *args, **kwargs):
+#         note = get_object_or_404(self.get_queryset(), pk=pk)
+#         note.delete()
+#         return Response(status=204)
     
     
     
