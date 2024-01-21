@@ -29,8 +29,8 @@ class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
         fields = ["uuid","title","content","created_at","mode_time","image","user","tags"]
-        read_only_fields = ["uuid","user","created_at"]
-        write_only_fields = ["title","content","mode_time","image","tags"]
+        read_only_fields = ["uuid","user","created_at","mode_time"]
+        write_only_fields = ["title","content","image","tags"]
     
     def create(self, validated_data) -> Note:
         tags = validated_data.pop("tags")
@@ -53,7 +53,7 @@ class NoteListSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Note
-        fields = ["uuid","title","content","created_at","mode_time","image","user","tags"]
+        fields = ["uuid","title","created_at","mode_time","image","user","tags"]
 
 class NoteCreateSerializer(serializers.ModelSerializer):
     class Meta:

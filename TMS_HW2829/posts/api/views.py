@@ -11,7 +11,7 @@ from django.conf import settings
 import uuid
 
 from posts.api.permissions import IsOwnerOrReadOnly
-from posts.api.serializers import UserSerializer, TagSerializer, ImageSerializer, NoteSerializer, NoteListSerializer, NoteListSerializer, NoteCreateSerializer, NoteDetailSerializer
+from posts.api.serializers import UserSerializer, TagSerializer, ImageSerializer, NoteSerializer, NoteListSerializer
 
 from posts.models import Note, Tag, User
 
@@ -93,12 +93,7 @@ class NoteDetailAPIView(RetrieveUpdateDestroyAPIView):
 #     def delete(self, request, pk: uuid, *args, **kwargs):
 #         note = get_object_or_404(self.get_queryset(), pk=pk)
 #         note.delete()
-#         return Response(status=204)
-    
-    
-    
-        
-        
+#         return Response(status=204)       
 
 class UploadImageAPIView(GenericAPIView):
     serializer_class = ImageSerializer
