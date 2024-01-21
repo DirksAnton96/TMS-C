@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+{% block title %}
+О сайте
+{% endblock %}
+
+{% block links %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h1>О сайте</h1>
+
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+        <div class="col-10 col-sm-8 col-lg-6">
+          <img src="https://fonoteka.top/src.php?src=https://fonoteka.top/uploads/posts/2023-08/thumbs/1693264019_phonoteka-top-p-fon-getto-instagram-1.jpg&w=460&h=320"
+               class="d-block mx-lg-auto img-fluid rounded-3" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+        </div>
+        <div class="col-lg-6">
+          <p class="lead"> <smal class="text-muted"> «Блин, да где же мои ключи?», — как часто ты задаёшь себе этот вопрос? В этом приложении ты найдёшь для себя инструмент, который поможет систематизировать заметки и идеи в одном месте! </smal> </p>
+        </div>
+      </div>
+      
+
+    </form>
+</div>
+{% endblock %}
