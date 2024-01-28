@@ -113,3 +113,19 @@ def queryset_optimization(queryset: QuerySet[Note]) -> QuerySet[Note]:
         .distinct()  # Убирание дубликатов, если они есть
         .order_by("-created_at")  # Сортировка результатов по убыванию по полю created_at
     )
+
+# def queryset_optimization_history(queryset: QuerySet[Note]) -> QuerySet[Note]:
+#     return(
+#         queryset  # Запрос
+#         .select_related("user")  # Вытягивание связанных данных из таблицы User в один запрос
+#         .prefetch_related("tags")  # Вытягивание связанных данных из таблицы Tag в отдельные запросы
+#         .annotate(
+#             # Создание нового вычисляемого поля username из связанной таблицы User
+#             username=F('user__username'),
+
+#             # Создание массива уникальных имен тегов для каждой заметки
+#             tag_names=ArrayAgg('tags__name', distinct=True)
+#         )
+#         .values("uuid", "title", "created_at", "username","tag_names")  # Выбор только указанных полей для результата
+#         .order_by("uuid")
+#     )

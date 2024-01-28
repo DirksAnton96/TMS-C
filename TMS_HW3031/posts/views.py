@@ -187,6 +187,7 @@ class ListHistoryOfPages(View):
     def get(self, request: WSGIRequest):
         history_service = HistoryPageNotes(request)
         queryset = queryset_optimization(Note.objects.filter(uuid__in = history_service.history_uuids))
+        #queryset = queryset_optimization_history(Note.objects.filter(uuid__in = history_service.history_uuids))
         return render(request, "home.html", {"notes": queryset[:100]})
         
 

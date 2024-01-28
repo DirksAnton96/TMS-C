@@ -78,6 +78,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                "posts.history.history_service_preprocessor",
             ],
         },
     },
@@ -95,9 +96,9 @@ DATABASES = {
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': "tms_posts",
-        "USER": "#######",
+        "USER": "#####",
         "PASSWORD": "#####",
-        "HOST": "######",  # IP адрес или домен СУБД.
+        "HOST": "#####",  # IP адрес или домен СУБД.
         "PORT": 5432,
     }
 }

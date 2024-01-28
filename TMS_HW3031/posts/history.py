@@ -24,10 +24,12 @@ class HistoryPageNotes:
         if len(self._session["history"]) >= 20:
             self._session["history"].pop(0)
             self._session["history"].append(str(note.uuid))
-            self._session.save()
+        elif str(note.uuid) in self._session["history"]:
+            self._session["history"].remove(str(note.uuid))
+            self._session["history"].insert(0,str(note.uuid))                
         else :     
             self._session["history"].append(str(note.uuid))
-            self._session.save()
+        self._session.save()
     
     @property
     def history_uuids(self) -> list[str]:
