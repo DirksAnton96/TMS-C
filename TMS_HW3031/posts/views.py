@@ -3,6 +3,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 
 import uuid
+from django.db.models import Case, When
 
 from django.views import View
 
@@ -186,7 +187,9 @@ def register(request: WSGIRequest):
 class ListHistoryOfPages(View):
     def get(self, request: WSGIRequest):
         history_service = HistoryPageNotes(request)
-        queryset = queryset_optimization(Note.objects.filter(uuid__in = history_service.history_uuids)).reverse()
+        uuids = history_service.history_uuids[::-1]
+        ordering = Case(*(When (uuid=ident, then=pos) for pos, ident in enumerate(uuids)))
+        queryset = queryset_optimization(Note.objects.filter(uuid__in = history_service.history_uuids)).order_by(ordering)
         #queryset = queryset_optimization_history(Note.objects.filter(uuid__in = history_service.history_uuids))
         return render(request, "home.html", {"notes": queryset[:100]})
         
