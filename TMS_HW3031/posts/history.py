@@ -18,21 +18,21 @@ class HistoryPageNotes:
     
     def add_page(self, note: Note) -> None:
         
-        self._session["history"].append(str(note.uuid))
-        self._session.save()
+        # self._session["history"].append(str(note.uuid))
+        # self._session.save()
         
-        # if len(self._session["history"]) >= 20:
-        #     self._session["history"].pop(0)
-        #     self._session["history"].append(str(note.uuid))
-        #     self._session.save()
-        # else :     
-        #     self._session["history"].append(str(note.uuid))
-        #     self._session.save()
+        if len(self._session["history"]) >= 20:
+            self._session["history"].pop(0)
+            self._session["history"].append(str(note.uuid))
+            self._session.save()
+        else :     
+            self._session["history"].append(str(note.uuid))
+            self._session.save()
     
     @property
     def history_uuids(self) -> list[str]:
         return self._session["history"]
     
-def history_service_preprocessor(request: WSGIRequest) -> dict[str, list[int]]:
+def history_service_preprocessor(request: WSGIRequest) -> dict[str, list[str]]:
     return {"history_uuids": HistoryPageNotes(request).history_uuids}
 

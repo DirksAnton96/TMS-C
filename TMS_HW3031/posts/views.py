@@ -45,13 +45,14 @@ def create_note_view(request: WSGIRequest):
 def show_note_view(request: WSGIRequest, note_uuid):
     try:
         note = Note.objects.get(uuid=note_uuid)  # Получение только ОДНОЙ записи.
-        history_service = HistoryPageNotes(request)
-        history_service.add_page(note)
 
     except Note.DoesNotExist:
         # Если не найдено такой записи.
         raise Http404
-
+    
+    history_service = HistoryPageNotes(request)
+    history_service.add_page(note)
+    
     return render(request, "note.html", {"note": note})
 # Create your views here.
 
@@ -185,8 +186,8 @@ def register(request: WSGIRequest):
 class ListHistoryOfPages(View):
     def get(self, request: WSGIRequest):
         history_service = HistoryPageNotes(request)
-        queryset = Note.objects.filter(uuid__in = history_service.history_uuids)
-        return render(request, "home.html", {"history_notes": queryset})
+        queryset = queryset_optimization(Note.objects.filter(uuid__in = history_service.history_uuids))
+        return render(request, "home.html", {"notes": queryset[:100]})
         
 
 
