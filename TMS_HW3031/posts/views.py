@@ -1,6 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+
+import uuid
+
+from django.views import View
 
 from django.urls import reverse
 from django.http import HttpResponseRedirect, Http404,HttpRequest
@@ -8,6 +12,7 @@ from django.core.handlers.wsgi import WSGIRequest
 
 from .models import Note, User, Tag
 from .service import create_note, filter_notes, queryset_optimization, update_note, update_user
+from .history import HistoryPageNotes
 
 
 def home_page_view(request: WSGIRequest):
@@ -40,6 +45,8 @@ def create_note_view(request: WSGIRequest):
 def show_note_view(request: WSGIRequest, note_uuid):
     try:
         note = Note.objects.get(uuid=note_uuid)  # Получение только ОДНОЙ записи.
+        history_service = HistoryPageNotes(request)
+        history_service.add_page(note)
 
     except Note.DoesNotExist:
         # Если не найдено такой записи.
@@ -174,3 +181,22 @@ def register(request: WSGIRequest):
     )
     return HttpResponseRedirect(reverse('home'))
 
+
+class ListHistoryOfPages(View):
+    def get(self, request: WSGIRequest):
+        history_service = HistoryPageNotes(request)
+        queryset = Note.objects.filter(uuid__in = history_service.history_uuids)
+        return render(request, "home.html", {"history_notes": queryset})
+        
+
+
+# class AddPagesToHistory(View):
+#     def get(self, request: WSGIRequest, note_uuid: uuid):
+#         note: Note = get_object_or_404(Note, uuid=note_uuid)
+#         self.add_to_history(request, note)
+#         return HttpResponseRedirect(reverse("show-note", args=(note.uuid,)))
+    
+#     @staticmethod
+#     def add_to_history(request: WSGIRequest, note: Note):
+#         history_service = HistoryPageNotes(request)
+#         history_service.add_page(note)

@@ -26,7 +26,7 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
-from posts.views import home_page_view, create_note_view, show_note_view, show_about_view, update_note_view, delete_node,register,user_notes,profile_update_view
+from posts.views import home_page_view, create_note_view, show_note_view, show_about_view, update_note_view, delete_node,register,user_notes,profile_update_view, ListHistoryOfPages
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -43,6 +43,8 @@ urlpatterns = [
     re_path(r"^media/(?P<path>.*)$", serve, {"document_root": settings.MEDIA_ROOT}),
     path("user/<username>/notes", user_notes, name="user_notes"),
     path("profile/<username>", profile_update_view, name="profile-view"),
+    path("history", ListHistoryOfPages.as_view(), name='show-history-of-pages'),
+    
     
     path('api/posts/',include('posts.api.urls')),
     

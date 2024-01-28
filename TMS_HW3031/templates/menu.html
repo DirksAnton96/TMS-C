@@ -23,6 +23,16 @@
           <a class="nav-link" href="{% url 'create-note' %}">Создать</a>
         </li>
 
+{#      Избранные рецепты   #}
+        {% comment %} {% if history_uuids %} {% endcomment %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'show-history-of-pages' %}">
+              История
+              <span class="badge rounded-pill bg-danger">{{ history_uuids | length }}</span>
+          </a>
+        </li>
+        {% comment %} {% endif %} {% endcomment %}
+
 {#      О сайте   #}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'show-about' %}">О сайте</a>
