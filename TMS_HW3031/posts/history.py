@@ -26,7 +26,7 @@ class HistoryPageNotes:
             self._session["history"].append(str(note.uuid))
         elif str(note.uuid) in self._session["history"]:
             self._session["history"].remove(str(note.uuid))
-            self._session["history"].insert(0,str(note.uuid))                
+            self._session["history"].append(str(note.uuid))                
         else :     
             self._session["history"].append(str(note.uuid))
         self._session.save()
