@@ -63,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'posts.logfilemiddleware.SimpleMiddleware',
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -96,9 +97,9 @@ DATABASES = {
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': "tms_posts",
-        "USER": "#####",
-        "PASSWORD": "#####",
-        "HOST": "######",  # IP адрес или домен СУБД.
+        "USER": "#######",
+        "PASSWORD": "#######",
+        "HOST": "#########",  # IP адрес или домен СУБД.
         "PORT": 5432,
     }
 }
