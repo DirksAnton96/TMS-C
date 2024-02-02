@@ -97,9 +97,9 @@ DATABASES = {
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': "tms_posts",
-        "USER": "#######",
-        "PASSWORD": "#######",
-        "HOST": "#########",  # IP адрес или домен СУБД.
+        "USER": "########",
+        "PASSWORD": "#####",
+        "HOST": "#######",  # IP адрес или домен СУБД.
         "PORT": 5432,
     }
 }
@@ -151,6 +151,19 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
+
+
+# EMAIL
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = 'dirksanton@yandex.by'
+DEFAULT_FROM_EMAIL = 'dirksanton@yandex.by'
+EMAIL_HOST_PASSWORD = 'tjozenphytikolme'
+
+
 
 STATIC_URL = 'static/'
 

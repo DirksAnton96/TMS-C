@@ -26,12 +26,13 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
-from posts.views import home_page_view, create_note_view, show_note_view, show_about_view, update_note_view, delete_node,register,user_notes,profile_update_view, ListHistoryOfPages
+from posts.views import home_page_view, create_note_view, show_note_view, show_about_view, update_note_view, delete_node,register,user_notes,profile_update_view, ListHistoryOfPages, confirm_register_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include("django.contrib.auth.urls")),
     path('accounts/register', register, name="register"),
+    path("register/confirm/<uidb64>/<token>", confirm_register_view, name="register-confirm"),
     
     
     path("", home_page_view, name="home"),

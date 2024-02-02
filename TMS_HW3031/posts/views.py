@@ -14,6 +14,7 @@ from django.core.handlers.wsgi import WSGIRequest
 from .models import Note, User, Tag
 from .service import create_note, filter_notes, queryset_optimization, update_note, update_user
 from .history import HistoryPageNotes
+from .email import ConfirmUserRegisterEmailSender
 
 
 def home_page_view(request: WSGIRequest):
@@ -176,12 +177,29 @@ def register(request: WSGIRequest):
 
     # Создадим учетную запись пользователя.
     # Пароль надо хранить в БД в шифрованном виде.
-    User.objects.create_user(
+    user = User.objects.create_user(
         username=request.POST["username"],
         email=request.POST["email"],
         password=request.POST["password1"]
     )
+    
+    ConfirmUserRegisterEmailSender(request,user).send_mail()
+    
+    if user is not None:
+        return HttpResponseRedirect(reverse("login"))
+    
     return HttpResponseRedirect(reverse('home'))
+
+def confirm_register_view(request: WSGIRequest, uidb64: str, token: str):
+    username = force_str(urlsafe_base64_decode(uidb64))
+
+    user = get_object_or_404(User, username=username)
+    if default_token_generator.check_token(user, token):
+        user.is_active = True
+        user.save(update_fields=["is_active"])
+        return HttpResponseRedirect(reverse("login"))
+
+    return render(request, "registration/invalid_email_confirm.html", {"username": user.username})
 
 
 class ListHistoryOfPages(View):
