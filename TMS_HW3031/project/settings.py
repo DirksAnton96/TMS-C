@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "djoser",
     "rest_framework_simplejwt.token_blacklist",
+    "crispy_forms",
+    "crispy_bootstrap5",
 ]
 
 AUTH_USER_MODEL = "posts.User"
@@ -97,9 +99,9 @@ DATABASES = {
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': "tms_posts",
-        "USER": "########",
-        "PASSWORD": "#####",
-        "HOST": "#######",  # IP адрес или домен СУБД.
+        "USER": "#########",
+        "PASSWORD": "########",
+        "HOST": "############",  # IP адрес или домен СУБД.
         "PORT": 5432,
     }
 }
@@ -161,8 +163,11 @@ EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'dirksanton@yandex.by'
 DEFAULT_FROM_EMAIL = 'dirksanton@yandex.by'
-EMAIL_HOST_PASSWORD = 'tjozenphytikolme'
+EMAIL_HOST_PASSWORD = '###############'
 
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 
 STATIC_URL = 'static/'

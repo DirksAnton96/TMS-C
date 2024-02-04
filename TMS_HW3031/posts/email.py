@@ -64,5 +64,5 @@ class ConfirmUserRegisterEmailSender(BaseEmailSender):
 
 class ConfirmUserResetPasswordEmailSender(BaseEmailSender):
     template_name = "registration/reset_password_confirm.html"
-    user_id_field = "id"
+    user_id_field = "username"
     subject = "Сброс пароля"
