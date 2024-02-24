@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+import os
 
 from pathlib import Path
 
@@ -201,9 +202,9 @@ EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
-EMAIL_HOST_USER = 'dirksanton@yandex.by'
-DEFAULT_FROM_EMAIL = 'dirksanton@yandex.by'
-EMAIL_HOST_PASSWORD = '###############'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', "")
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', "")
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', "")
 
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
