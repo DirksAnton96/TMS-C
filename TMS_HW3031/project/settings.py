@@ -59,6 +59,8 @@ if DEBUG:
     INSTALLED_APPS += [
         "debug_toolbar",
     ]
+    
+    
 
 
 AUTH_USER_MODEL = "posts.User"
