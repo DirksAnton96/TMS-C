@@ -22,12 +22,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#kvjty%--k0y3z97)wxkyzj4j*1mrjd1#n49*f!asma*tjh)1q'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-#kvjty%--k0y3z97)wxkyzj4j*1mrjd1#n49*f!asma*tjh)1q')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
 
-ALLOWED_HOSTS = []
+DEBUG = os.environ.get('DJANGO_DEBUG', '0') == "1"
+
+ALLOWED_HOSTS = ["*"]
+INTERNAL_IPS = ["127.0.0.1"]
 
 
 # Application definition
@@ -50,6 +53,13 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
 ]
 
+
+if DEBUG:
+    INSTALLED_APPS += [
+        "debug_toolbar",
+    ]
+
+
 AUTH_USER_MODEL = "posts.User"
 
 LOGIN_REDIRECT_URL = "/"
@@ -67,6 +77,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'posts.logfilemiddleware.SimpleMiddleware',
 ]
+
+if DEBUG:
+    MIDDLEWARE += [
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+    ]
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
 ROOT_URLCONF = 'project.urls'
 
@@ -89,6 +106,29 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'project.wsgi.application'
 
+REDIS_CACHE = os.environ.get("REDIS_CACHE_URL")
+
+if REDIS_CACHE:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": REDIS_CACHE,
+            "KEY_PREFIX": "test_django_food_" if DEBUG else "django_food_",
+        }
+    }
+else:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+            "KEY_PREFIX": "test_django_food_" if DEBUG else "django_food_",
+            "OPTIONS": {
+                "MAX_ENTRIES": 10,
+                "CULL_FREQUENCY": 2,  # 1/2
+            },
+        }
+    }
+
+
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -98,10 +138,10 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': "tms_posts",
-        "USER": "#########",
-        "PASSWORD": "########",
-        "HOST": "############",  # IP адрес или домен СУБД.
+        'NAME': os.environ.get("DATABASE_NAME"),
+        "USER": os.environ.get("DATABASE_USER"),
+        "PASSWORD": os.environ.get("DATABASE_PASSWORD"),
+        "HOST": os.environ.get("DATABASE_HOST"),  # IP адрес или домен СУБД.
         "PORT": 5432,
     }
 }
@@ -172,10 +212,17 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 STATIC_URL = 'static/'
 
+if os.environ.get("COLLECT_STATIC"):
+    STATIC_ROOT = "/var/www/django-food/static/"
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
+else:
+    STATICFILES_DIRS = [
+        BASE_DIR / 'static'
+    ]
+
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'static',
+# ]
 
 # ============== Media =================
 MEDIA_ROOT = BASE_DIR / 'media'  # Корень для сохранения медиа файлов.
