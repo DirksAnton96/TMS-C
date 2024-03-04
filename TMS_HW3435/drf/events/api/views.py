@@ -1,4 +1,3 @@
-from django.http import Http404, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -7,6 +6,7 @@ from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.exceptions import ValidationError
 from events.models import Event
 from .permissions import IsSuperUser
 from .serializers import EventSerializer
@@ -45,7 +45,7 @@ class SubscribeView(APIView):
         event = get_object_or_404(Event, id=event_id)
 
         if event.meeting_time < timezone.now():
-            raise HttpResponseBadRequest
+            raise ValidationError("К данному событию уже нельзя присоединиться")
 
         event.users.add(current_user)
         event.save()
