@@ -1,5 +1,4 @@
-#from datetime import datetime
-from django.http import Http404
+from django.http import Http404, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -15,7 +14,6 @@ from django.utils import timezone
 
 
 class EventListCreateAPIView(ListAPIView):
-    permission_classes = [IsSuperUser]
 
     queryset = Event.objects.filter(meeting_time__gt=timezone.now())
 
@@ -47,7 +45,7 @@ class SubscribeView(APIView):
         event = get_object_or_404(Event, id=event_id)
 
         if event.meeting_time < timezone.now():
-            raise Http404
+            raise HttpResponseBadRequest
 
         event.users.add(current_user)
         event.save()
