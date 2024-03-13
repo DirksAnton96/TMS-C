@@ -1,0 +1,11 @@
+venv
+.venv
+person.json
+Untitled-Message-Table-search-result.csv
+*.cpython-310.pyc
+__pycache__
+.__pycache__
+media
+.media
+db.sqlite3
+env.txt
