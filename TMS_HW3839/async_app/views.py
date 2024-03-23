@@ -35,19 +35,35 @@ class NoteCreateView(web.View):
 class NoteDeleteView(web.View):
     @template("notes/update.html")
     async def post(self):
+        if not self.request.user:
+            raise web.HTTPForbidden()
+        
         post_id = int(self.request.match_info.get('post_id', -1))
-        deleted_post = await Post.delete(post_id=post_id)
-        if deleted_post:
-            raise web.HTTPFound(f'/')
+        post: Post = await Post.get(post_id=post_id)
+        if post.user_id != self.request.user.id:
+            raise web.HTTPForbidden()
+        if post:
+            await post.delete()
+            return web.HTTPFound("/")
         else:
-            return {"post": deleted_post, "error": "не удалось удалить заметку"}
+            return web.HTTPNotFound()
+        # deleted_post = await Post.delete(post_id=post_id)
+        # if deleted_post:
+        #     raise web.HTTPFound(f'/')
+        # else:
+        #     return {"post": deleted_post, "error": "не удалось удалить заметку"}
 
 
 class NoteUpdateView(web.View):
     @template("notes/update.html")
     async def get(self):
-        post_id = int(self.request.match_info.get('post_id', -1))
-        post = await Post.get_by_id(post_id)
+        if not self.request.user:
+            raise web.HTTPForbidden()
+        #post_id = int(self.request.match_info.get('post_id', -1))
+        post: Post = await Post.get(id=self.request.match_info.get('post_id'))
+        if post.user_id != self.request.user.id:
+            raise web.HTTPForbidden()
+        #post = await Post.get_by_id(post_id)
         return {"post": post}
 
     @template("notes/update.html")
@@ -69,6 +85,8 @@ class NoteUpdateView(web.View):
             if not post:
                 post = await Post.get_by_id(post_id)
             return {"post": post, "error": "Не удалось обновить заметку."}
+        else:
+            raise web.HTTPFound(f"/")
 
 
 class LoginView(web.View):
